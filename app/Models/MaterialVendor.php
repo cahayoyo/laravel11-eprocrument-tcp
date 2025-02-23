@@ -14,4 +14,14 @@ class MaterialVendor extends Model
         'material_category_id',
         'vendor_id',
     ];
+
+    public function materialCategory()
+    {
+        return $this->belongsTo(MaterialCategory::class);
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 }

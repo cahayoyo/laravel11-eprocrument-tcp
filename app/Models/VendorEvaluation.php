@@ -19,4 +19,14 @@ class VendorEvaluation extends Model
         'notes',
         'evaluated_by',
     ];
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 }

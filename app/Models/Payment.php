@@ -20,4 +20,9 @@ class Payment extends Model
         'status',
         'approved_by',
     ];
+
+    public function contract()
+    {
+        return $this->belongsTo(Contract::class);
+    }
 }
