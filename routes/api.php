@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\RoleController;
 use Illuminate\Support\Facades\Route;
 
 // Route group untuk API v1
@@ -15,4 +16,6 @@ Route::prefix('v1')->group(function () {
             Route::post('/logout', 'logout')->name('logout');
         });
     });
+
+    Route::apiResource('roles', RoleController::class);
 });

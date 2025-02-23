@@ -39,11 +39,24 @@ class BaseRepository implements BaseRepositoryInterface
     public function update(int $id, array $data)
     {
         $record = $this->find($id);
-        return $record->update($data);
+
+        if (!$record) {
+            throw new \Exception('Record not found');
+        }
+
+        $record->update($data);
+
+        return $record->fresh();
     }
 
     public function delete(int $id)
     {
-        return $this->model->destroy($id);
+        $record = $this->find($id);
+
+        if (!$record) {
+            throw new \Exception('Record not found');
+        }
+
+        return $record->delete();
     }
 }
