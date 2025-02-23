@@ -15,21 +15,32 @@ class ResponseFormatter
     ];
 
     // Method untuk success response
-    public static function success($data = null, $message = null)
+    public static function success($data = null, $message = null, $code = 200)
     {
+        // Reset status ke success
+        self::$response['meta']['status'] = 'success';
+
+        // Set code, message, dan data
+        self::$response['meta']['code'] = $code;
         self::$response['meta']['message'] = $message;
         self::$response['data'] = $data;
 
-        return response()->json(self::$response, self::$response['meta']['code']);
+        return response()->json(self::$response, $code);
     }
 
     // Method untuk error response
     public static function error($message = null, $code = 400)
     {
-        self::$response['meta']['code'] = $code;
+        // Reset status ke error
         self::$response['meta']['status'] = 'error';
+
+        // Set code dan message
+        self::$response['meta']['code'] = $code;
         self::$response['meta']['message'] = $message;
 
-        return response()->json(self::$response, self::$response['meta']['code']);
+        // Reset data ke null
+        self::$response['data'] = null;
+
+        return response()->json(self::$response, $code);
     }
 }

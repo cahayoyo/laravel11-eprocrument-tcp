@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class AuthService
@@ -18,22 +19,29 @@ class AuthService
     // Method untuk register
     public function register(array $data)
     {
-        // Hash password sebelum disimpan
-        $data['password'] = Hash::make($data['password']);
+        try {
+            // Hash password
+            $data['password'] = Hash::make($data['password']);
 
-        // Set status default ke active
-        $data['status'] = 'active';
+            // Set status active
+            $data['status'] = 'active';
 
-        // Simpan user baru
-        $user = $this->userRepository->create($data);
+            // Create user
+            $user = $this->userRepository->create($data);
 
-        // Buat token untuk API
-        $token = $user->createToken('auth-token')->plainTextToken;
+            // Generate token
+            $token = $user->createToken('auth-token')->plainTextToken;
 
-        return [
-            'user' => $user,
-            'token' => $token
-        ];
+            return [
+                'user' => $user,
+                'token' => $token
+            ];
+        } catch (\Exception $e) {
+            // Logging data
+            Log::error('Register service error: ' . $e->getMessage());
+
+            throw new \Exception('Failed to register user');
+        }
     }
 
     // Method untuk login
@@ -68,9 +76,11 @@ class AuthService
     // Method untuk logout
     public function logout($user)
     {
-        // Hapus token yang sedang digunakan
-        $user->currentAccessToken()->delete();
+        if (!$user) {
+            throw new \Exception('User not authenticated');
+        }
 
-        return true;
+        // Delete the current token
+        return $user->currentAccessToken()->delete();
     }
 }
