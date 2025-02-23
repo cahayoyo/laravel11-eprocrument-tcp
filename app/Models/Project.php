@@ -6,25 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Vendor extends Model
+class Project extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
-        'company_name',
-        'tax_number',
-        'registration_number',
-        'address',
-        'city',
-        'province',
-        'postal_code',
-        'website',
-        'company_phone',
+        'contract_id',
+        'manager_id',
+        'name',
+        'description',
+        'progress_percentage',
+        'start_date',
+        'end_date',
         'status',
     ];
 
-    public function user()
+    public function contract()
+    {
+        return $this->belongsTo(Contract::class);
+    }
+
+    public function manager()
     {
         return $this->belongsTo(User::class);
     }
