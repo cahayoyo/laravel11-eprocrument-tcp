@@ -31,7 +31,7 @@ class AuthController extends Controller
             return ResponseFormatter::success(
                 data: $data,
                 message: 'User registered successfully',
-                code: 200
+                code: 201
             );
         } catch (\Exception $e) {
             // Logging data
@@ -55,14 +55,16 @@ class AuthController extends Controller
 
             return ResponseFormatter::success(
                 data: $data,
-                message: 'Logged in successfully'
+                message: 'Logged in successfully',
+                code: 200
             );
         } catch (\Exception $e) {
             // Logging data
             Log::error('Login error: ' . $e->getMessage());
 
             return ResponseFormatter::error(
-                message: $e->getMessage()
+                message: $e->getMessage(),
+                code: 400
             );
         }
     }
@@ -86,7 +88,7 @@ class AuthController extends Controller
 
             return ResponseFormatter::error(
                 message: $e->getMessage(),
-                code: 500 // Gunakan 500 untuk error server
+                code: 500
             );
         }
     }

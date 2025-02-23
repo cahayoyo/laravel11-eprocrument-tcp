@@ -30,7 +30,7 @@ class RegisterTest extends TestCase
             'phone' => '08123456789'
         ]);
 
-        $response->assertStatus(200)
+        $response->assertStatus(201)
             ->assertJsonStructure([
                 'meta' => [
                     'code',

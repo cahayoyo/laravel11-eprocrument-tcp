@@ -7,21 +7,19 @@ class ResponseFormatter
     // Template response
     protected static $response = [
         'meta' => [
-            'code' => 200,
-            'status' => 'success',
+            'code' => null,
+            'status' => null,
             'message' => null,
         ],
         'data' => null,
     ];
 
     // Method untuk success response
-    public static function success($data = null, $message = null, $code = 200)
+    public static function success($data = null, $message = null, $code = null, $status = 'success')
     {
-        // Reset status ke success
-        self::$response['meta']['status'] = 'success';
-
         // Set code, message, dan data
         self::$response['meta']['code'] = $code;
+        self::$response['meta']['status'] = $status;
         self::$response['meta']['message'] = $message;
         self::$response['data'] = $data;
 
@@ -29,13 +27,11 @@ class ResponseFormatter
     }
 
     // Method untuk error response
-    public static function error($message = null, $code = 400)
+    public static function error($message = null, $code = null, $status = 'error')
     {
-        // Reset status ke error
-        self::$response['meta']['status'] = 'error';
-
         // Set code dan message
         self::$response['meta']['code'] = $code;
+        self::$response['meta']['status'] = $status;
         self::$response['meta']['message'] = $message;
 
         // Reset data ke null
