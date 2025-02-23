@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\RoleController;
+use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Route group untuk API v1
@@ -18,4 +19,5 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::apiResource('roles', RoleController::class);
+    Route::apiResource('users', UserController::class);
 });

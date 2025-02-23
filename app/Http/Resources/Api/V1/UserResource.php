@@ -15,7 +15,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'status' => $this->status,
-            'role' => new RoleResource($this->whenLoaded('role')), // Load role jika ada
+            'role' => new RoleResource($this->role),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

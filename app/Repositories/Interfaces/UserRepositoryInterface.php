@@ -6,4 +6,5 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
 {
     // Method spesifik untuk User jika diperlukan
     public function findByEmail(string $email);
+    public function findByRole(int $roleId);
 }
